@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Portfolio - TAZ</title>
+    <style>
+        /* --- CSS STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #343a40; background-color: #f8f9fa; scroll-behavior: smooth; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 80px 0; border-bottom: 1px solid #e9ecef; }
+        h2 { font-size: 2.5rem; margin-bottom: 50px; text-align: center; color: #343a40; text-transform: uppercase; }
+
+        /* Navigation Bar */
+        .navbar { background-color: #343a40; padding: 15px 0; color: #fff; position: fixed; width: 100%; z-index: 1000; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo h1 { font-size: 1.5rem; margin-bottom: 2px; }
+        .logo p { font-size: 0.8rem; color: #ccc; }
+        .nav-links ul { display: flex; list-style: none; }
+        .nav-links a { color: #fff; text-decoration: none; padding: 0 15px; font-weight: bold; font-size: 0.9rem; letter-spacing: 0.5px; transition: color 0.3s; }
+        .nav-links a:hover { color: #007bff; }
+
+        /* Hero Section */
+        #hero { position: relative; color: #fff; padding: 200px 0 150px; overflow: hidden; background-image: url('https://images.pexels.com/photos/1036856/pexels-photo-1036856.jpeg?auto=compress&cs=tinysrgb&w=1200'); background-size: cover; background-position: center top; border-bottom: none; }
+        #hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; max-width: 600px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .hero-content h2 { font-size: 3rem; margin-bottom: 15px; letter-spacing: 2px; text-align: left; color: #fff; }
+        .hero-content p { font-size: 1.1rem; margin-bottom: 30px; max-width: 450px; }
+        .btn-primary { display: inline-block; background-color: #007bff; color: #fff; padding: 12px 30px; border: none; border-radius: 4px; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: background-color 0.3s; }
+        .btn-primary:hover { background-color: #0056b3; }
+        
+        /* Floating Image */
+        .floating-img { position: absolute; width: 300px; height: 400px; background-image: url('https://images.pexels.com/photos/3760339/pexels-photo-3760339.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop'); background-size: cover; background-position: center; top: 400px; left: 50%; transform: translateX(-80%); z-index: 3; border: 5px solid #fff; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); }
+        
+        /* About Section */
+        #about { padding: 150px 0 80px; min-height: 600px; position: relative; }
+        .about-content-wrapper { max-width: 700px; margin-left: auto; }
+
+        /* Services & Skills */
+        .services-grid, .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; text-align: center; }
+        .service-card, .skill-bar { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); transition: transform 0.3s, box-shadow 0.3s; }
+        .service-card:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0, 123, 255, 0.2); }
+        .service-card h3 { color: #007bff; margin-bottom: 15px; font-size: 1.4rem; }
+        
+        .skill-bar { text-align: left; padding: 20px; }
+        .skill-bar p { font-weight: bold; margin-bottom: 5px; }
+        .progress-container { background: #e9ecef; border-radius: 5px; height: 10px; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: #007bff; }
+
+        /* Testimonial */
+        #testimonial { background-color: #e9ecef; text-align: center; }
+        .testimonial-card { max-width: 800px; margin: 0 auto; background: #fff; padding: 40px; border-left: 5px solid #007bff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .testimonial-card p { font-size: 1.1rem; font-style: italic; margin-bottom: 20px; }
+        .client-name { font-weight: bold; color: #343a40; font-size: 1rem; }
+
+        /* Experience */
+        .experience-timeline { max-width: 800px; margin: 0 auto; position: relative; }
+        .experience-timeline::before { content: ''; position: absolute; left: 50%; width: 2px; height: 100%; background: #ccc; margin-left: -1px; }
+        .timeline-item { padding: 10px 0; position: relative; width: 50%; }
+        .timeline-item:nth-child(odd) { left: 0; padding-right: 30px; text-align: right; }
+        .timeline-item:nth-child(even) { left: 50%; padding-left: 30px; text-align: left; }
+        .timeline-item::after { content: ''; position: absolute; width: 16px; height: 16px; border-radius: 50%; right: -8px; background: #007bff; top: 15px; border: 2px solid #fff; z-index: 1; }
+        .timeline-item:nth-child(even)::after { left: -8px; }
+
+        .timeline-item h4 { font-size: 1.2rem; color: #007bff; margin-bottom: 5px; }
+        .timeline-item .duration { font-style: italic; color: #6c757d; display: block; margin-bottom: 10px; }
+        
+        /* Contact */
+        #contact { background-color: #343a40; color: #fff; border-bottom: none; text-align: center; }
+        .contact-info p { font-size: 1.2rem; margin: 15px 0; }
+        .contact-info a { color: #007bff; text-decoration: underline; }
+
+        /* Footer */
+        footer { background-color: #212529; color: #aaa; text-align: center; padding: 30px 0; font-size: 0.9rem; }
+
+        /* Responsive */
+        @media (max-width: 992px) { /* Tablet adjustments */ }
+        @media (max-width: 768px) { /* Mobile adjustments */ }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <h1>Online Portfolio</h1>
+                <p>Just another My Blog site</p>
+            </div>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="#hero">HOME</a></li>
+                    <li><a href="#about">ABOUT ME</a></li>
+                    <li><a href="#services">SERVICES</a></li>
+                    <li><a href="#skill">SKILL</a></li>
+                    <li><a href="#testimonial">TESTIMONIAL</a></li>
+                    <li><a href="#experience">EXPERIENCE</a></li>
+                    <li><a href="#works">WORKS</a></li>
+                    <li><a href="#blog">BLOG</a></li>
+                    <li><a href="#contact">CONTACT US</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>TAZ</h2>
+                <p>
+                    Hi, I am a Professional Developer and ICT Degree holder. I have five years experience in ICT Sector as an ICT Lecturer, I'd like...
+                </p>
+                <a href="#contact" class="btn-primary">Hire Me</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="floating-img"></div>
+
+    <section id="about">
+        <div class="container">
+            <div class="about-content-wrapper">
+                <h2>ABOUT ME</h2>
+                <p>
+                    I am a highly motivated **Full Stack Developer** specializing in building scalable and performance-driven web applications. My expertise lies in translating complex business requirements into robust, clean, and maintainable code bases.
+                </p>
+                <p>
+                    I possess deep knowledge of the **Software Development Lifecycle (SDLC)**, proficiently navigating all phases from requirements analysis and architectural design to deployment and continuous integration (CI/CD). My core skills include modern JavaScript frameworks, relational and NoSQL databases, and cloud computing platforms. I am committed to delivering high-quality software that exceeds client expectations.
+                </p>
+                <a href="#" class="btn-primary">DOWNLOAD RESUME</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2>SERVICES</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Web Development</h3>
+                    <p>Building high-performance, responsive websites and complex web applications using React, Node.js, and modern APIs.</p>
+                </div>
+                <div class="service-card">
+                    <h3>UI/UX Design</h3>
+                    <p>Crafting intuitive and engaging user interfaces based on user research and industry-best user experience practices.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Cloud Architecture</h3>
+                    <p>Designing and deploying scalable serverless architectures on AWS and Azure, focusing on cost optimization and reliability.</p>
+                </div>
+                <div class="service-card">
+                    <h3>API Development</h3>
+                    <p>Creating fast, secure, and well-documented RESTful and GraphQL APIs to power both internal and external services.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skill">
+        <div class="container">
+            <h2>SKILL & EXPERTISE</h2>
+            <div class="services-grid skills-grid">
+                <div class="skill-bar">
+                    <p>JavaScript / TypeScript</p>
+                    <div class="progress-container"><div class="progress-bar" style="width: 95%;"></div></div>
+                </div>
+                <div class="skill-bar">
+                    <p>React / Next.js</p>
+                    <div class="progress-container"><div class="progress-bar" style="width: 90%;"></div></div>
+                </div>
+                <div class="skill-bar">
+                    <p>Node.js / Express</p>
+                    <div class="progress-container"><div class="progress-bar" style="width: 85%;"></div></div>
+                </div>
+                <div class="skill-bar">
+                    <p>SQL / PostgreSQL</p>
+                    <div class="progress-container"><div class="progress-bar" style="width: 80%;"></div></div>
+                </div>
+                <div class="skill-bar">
+                    <p>Cloud (AWS/Azure)</p>
+                    <div class="progress-container"><div class="progress-bar" style="width: 75%;"></div></div>
+                </div>
+                <div class="skill-bar">
+                    <p>DevOps / CI/CD</p>
+                    <div class="progress-container"><div class="progress-bar" style="width: 70%;"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonial">
+        <div class="container">
+            <h2>TESTIMONIAL</h2>
+            <div class="testimonial-card">
+                <p>"TAZ delivered exceptional quality code ahead of schedule. His understanding of full-stack architecture and dedication to clean, reusable components made him an invaluable asset to our project. Highly recommend his services."</p>
+                <div class="client-name">— Jane Doe, Project Manager at TechCorp Solutions</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="container">
+            <h2>EXPERIENCE</h2>
+            <div class="experience-timeline">
+                <div class="timeline-item">
+                    <h4>Senior Full Stack Developer</h4>
+                    <span class="duration">2020 - Present</span>
+                    <p>Led development team on a mission-critical e-commerce platform migration using React and GraphQL.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Software Engineer</h4>
+                    <span class="duration">2018 - 2020</span>
+                    <p>Developed core microservices for a financial data analytics system using Node.js and AWS Lambda.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>ICT Lecturer</h4>
+                    <span class="duration">2016 - 2018</span>
+                    <p>Taught modules in database management, web fundamentals (HTML/CSS/JS), and programming logic.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Junior Developer Internship</h4>
+                    <span class="duration">2015 - 2016</span>
+                    <p>Assisted in front-end development and bug fixing for enterprise resource planning (ERP) software.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="works">
+        <div class="container">
+            <h2>WORKS (PORTFOLIO)</h2>
+            <p style="text-align: center; color: #6c757d;">[Content Placeholder: This section is ready for a grid of your project cards or images.]</p>
+        </div>
+    </section>
+    
+    <section id="blog">
+        <div class="container">
+            <h2>BLOG</h2>
+            <p style="text-align: center; color: #6c757d;">[Content Placeholder: This section is ready for summaries of your technical articles or posts.]</p>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>CONTACT US</h2>
+            <div class="contact-info">
+                <p>Ready to start a project? Let's connect.</p>
+                <p>Email: <a href="mailto:taz.dev@example.com">taz.dev@example.com</a></p>
+                <p>Phone: +91 98765 43210 (India)</p>
+                <div style="max-width: 500px; margin: 30px auto; background: #495057; padding: 20px; border-radius: 8px;">
+                    <form action="#" method="POST">
+                        <input type="text" placeholder="Your Name" style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 4px;">
+                        <input type="email" placeholder="Your Email" style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 4px;">
+                        <textarea placeholder="Your Message" rows="4" style="width: 100%; padding: 10px; margin-bottom: 15px; border: none; border-radius: 4px;"></textarea>
+                        <button type="submit" class="btn-primary" style="width: 100%; padding: 10px;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 TAZ Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
